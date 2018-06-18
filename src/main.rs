@@ -74,7 +74,7 @@ fn main() {
 
     info!("Sawtooth Raft Engine ({})", env!("CARGO_PKG_VERSION"));
 
-    let raft_engine = engine::RaftEngine::new(args.id);
+    let raft_engine = engine::RaftEngine::new();
 
     let (driver, _stop) = ZmqDriver::new();
 
