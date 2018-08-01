@@ -66,9 +66,9 @@ def main():
         '-f', compose_file
     ]
 
-    compose_up = compose + [
-        'up', '--abort-on-container-exit'
-    ]
+    compose_up = compose + ['up']
+    if not args.no_abort:
+        compose_up.append('--abort-on-container-exit')
 
     compose_down = compose + ['down', '--remove-orphans', '--volumes']
 
@@ -258,6 +258,12 @@ def parse_args():
     parser.add_argument(
         "-n", "--no-build",
         help="don't build docker images",
+        action='store_true',
+        default=False)
+
+    parser.add_argument(
+        "--no-abort",
+        help="don't abort when a container exits",
         action='store_true',
         default=False)
 
