@@ -72,6 +72,7 @@ node ('master') {
             stage("Run Tests") {
                 sh './bin/run_docker_test tests/test_unit.yaml'
                 sh './bin/run_docker_test tests/test_liveness.yaml'
+                sh './bin/run_docker_test --no-abort tests/test_dynamic_network.yaml'
             }
         }
     }

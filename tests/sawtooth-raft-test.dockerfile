@@ -20,12 +20,14 @@ RUN echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/nightly xenial univers
  || apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 44FC67F19B2466EA) \
  && apt-get update \
  && apt-get install -y -q --allow-downgrades \
+    apt-transport-https \
     build-essential \
     curl \
     libssl-dev \
     gcc \
     git \
     pkg-config \
+    python-pip \
     python3 \
     python3-sawtooth-cli \
     python3-sawtooth-rest-api \
@@ -35,6 +37,17 @@ RUN echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/nightly xenial univers
     python3-nose2 \
     sawtooth-smallbank-workload \
     sawtooth-smallbank-tp-go \
+    software-properties-common \
     unzip \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+  && add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+          stable"
+
+ RUN apt-get update && apt-get install -y -q \
+       docker-ce \
+     && pip install docker-compose
